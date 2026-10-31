@@ -1,0 +1,44 @@
+model:
+  swin_checkpoint: pretrained/swin_tiny_patch4_window7_224_22k.pth
+  bert_model: bert-base-uncased
+  embed_dim: 512
+  num_heads: 8
+  dropout: 0.1
+  ffn_expansion: 2
+  semantic_k: 6
+  refinement_steps: 4
+  context_eta_initial: 1.0
+  fusion_gate_initial: 0.5
+  bert_gradient_checkpointing: true
+loss:
+  temperature_initial: 0.07
+  lambda_ca: 0.5
+  margin: 0.2
+  warmup_epochs: 5
+train:
+  seed: 42
+  epochs: 50
+  batch_size: 128
+  captions_per_image: 3
+  image_size: 224
+  max_length: 80
+  learning_rate: 2.0e-05
+  projection_learning_rate: 0.0001
+  refinement_learning_rate: 0.0001
+  weight_decay: 0.01
+  betas:
+  - 0.9
+  - 0.98
+  eps: 1.0e-08
+  warmup_epochs: 5
+  max_grad_norm: 1.0
+  amp_dtype: bfloat16
+  num_workers: 4
+  eval_batch_size: 256
+  text_batch_size: 512
+data:
+  image_root: data/images
+  train_json: data/train.json
+  val_json: data/val.json
+  test_json: data/test.json
+output_dir: outputs/main
